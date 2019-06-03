@@ -1,3 +1,5 @@
+[ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
+
 # エイリアス
 alias ls='ls -G'
 alias vi='vim'
@@ -53,8 +55,6 @@ setopt hist_ignore_all_dups
 
 # 補完で小文字でも大文字にマッチさせる
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-export PATH="$HOME/.phpenv/bin:$PATH"
-eval "$(phpenv init -)"
 
 # 履歴をpecoで選択できるようにする
 function peco-select-history() {

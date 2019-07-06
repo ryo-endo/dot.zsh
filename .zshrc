@@ -71,3 +71,26 @@ alias dcdown='docker-compose -f $(ls -l | grep \.yml | awk '\''{print $8}'\'' | 
 alias dps='docker ps --format "{{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Command}}\t{{.RunningFor}}"'
 alias dexec='docker exec -it `dps | peco | cut -f 1` /bin/bash'
 
+# ec-cubeプラグイン圧縮 - ec-cube3系のルートディレクトリでこの関数を使う
+function plugin-pkg {
+  CODE=$(ls -l ./app/Plugin | grep ^d | awk '{print $8}' | peco)
+  TARGET=app/Plugin/$CODE
+  OUTPUT=~/$CODE.tar.gz
+  
+  tar -zcf $OUTPUT $TARGET/*
+  
+  echo "$(pwd)/$TARGET\n-> $OUTPUT"
+}
+
+# gcpのインスタンスを選択してssh
+function gcp-ssh {
+  PROJECT_ID=$(gcloud projects list --format="value(projectId)" | peco)
+  INSTANCE=${(z)$(gcloud --project=${PROJECT_ID} compute instances list --format="value(name,zone)" | peco)}
+  NAME=${INSTANCE[1]}
+  ZONE=${INSTANCE[2]}
+  gcloud --project=${PROJECT_ID} compute ssh ${NAME} --zone=${ZONE}
+}
+
+# Processを選択してkill
+alias kill-ps='kill $(ps aux | peco)'
+

@@ -1,4 +1,5 @@
 [ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
+. $ZDOTDIR/gconf.zsh
 
 # エイリアス
 alias ls='ls -G'
@@ -23,16 +24,21 @@ setopt hist_ignore_all_dups
 
 # プロンプト設定
 setopt prompt_subst
-precmd () { vcs_info }
-
+precmd () {
+  vcs_info
+}
 PROMPT='
-%{${fg[green]}%}[%n] %{${fg[yellow]}%}%~%{${reset_color}%} ${vcs_info_msg_0_}
-$ '
+%F{032}[%n] %~%{${reset_color}%} ${vcs_info_msg_0_}
+%F{250}%(!.#.>)%{$reset_color%} '
+RPROMPT=''
 
 # gitの表示
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}(%b) %{'$reset_color'%}'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr "%F{214}+%{$reset_color%}"
+zstyle ':vcs_info:git:*' stagedstr "%F{214}!%{$reset_color%}"
+zstyle ':vcs_info:*' formats "%F{250}(%c%u%F{250}%b%F{250})%f"
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
 # 文字コードの指定
 export LANG=ja_JP.UTF-8

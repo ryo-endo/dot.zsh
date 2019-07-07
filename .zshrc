@@ -50,14 +50,17 @@ setopt print_eight_bit
 autoload -Uz colors
 colors
 
+### History設定 ##
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 # 同時に起動したzshの間でヒストリを共有する
 setopt share_history
-
 # 直前と同じコマンドの場合は履歴に追加しない
 setopt hist_ignore_dups
-
 # 同じコマンドをヒストリに残さない
 setopt hist_ignore_all_dups
+
 
 # 補完で小文字でも大文字にマッチさせる
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

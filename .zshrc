@@ -1,5 +1,5 @@
 [ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
-. $ZDOTDIR/gconf.zsh
+. $ZDOTDIR/gcloud.zsh
 
 # エイリアス
 alias ls='ls -G'

@@ -27,8 +27,14 @@ setopt prompt_subst
 precmd () {
   vcs_info
 }
+
+local p_rhst=""
+if [[ -n "${REMOTEHOST}${SSH_CONNECTION}" ]]; then
+  p_rhst="@"$(who am i | sed -r 's/.*\((.*)\).*/\1/')
+fi
+
 PROMPT='
-%F{032}[%n] %~%{${reset_color}%} ${vcs_info_msg_0_}
+%F{032}[%n%F{166}$p_rhst%F{032}] %~%{${reset_color}%} ${vcs_info_msg_0_}
 %F{250}%(!.#.>)%{$reset_color%} '
 RPROMPT=''
 

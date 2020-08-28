@@ -1,5 +1,6 @@
 [ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 . $ZDOTDIR/gcloud.zsh
+. $ZDOTDIR/docker.zsh
 
 # エイリアス
 alias ls='ls -G'
@@ -98,15 +99,6 @@ function plugin-pkg {
   tar -zcf $OUTPUT $TARGET/*
   
   echo "$(pwd)/$TARGET\n-> $OUTPUT"
-}
-
-# gcpのインスタンスを選択してssh
-function gcp-ssh {
-  PROJECT_ID=$(gcloud projects list --format="value(projectId)" | peco)
-  INSTANCE=${(z)$(gcloud --project=${PROJECT_ID} compute instances list --format="value(name,zone)" | peco)}
-  NAME=${INSTANCE[1]}
-  ZONE=${INSTANCE[2]}
-  gcloud --project=${PROJECT_ID} compute ssh ${NAME} --zone=${ZONE}
 }
 
 # Processを選択してkill

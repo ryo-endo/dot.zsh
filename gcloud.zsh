@@ -29,3 +29,13 @@ function ggetip() {
   IP=$(gcloud compute instances list --filter="name=$(ggetname)" --format="value(EXTERNAL_IP)")
   echo ${IP}
 }
+
+# gcpのインスタンスを選択してssh
+function gcp-ssh {
+  PROJECT_ID=$(gcloud projects list --format="value(projectId)" | peco)
+  INSTANCE=${(z)$(gcloud --project=${PROJECT_ID} compute instances list --format="value(name,zone)" | peco)}
+  NAME=${INSTANCE[1]}
+  ZONE=${INSTANCE[2]}
+  gcloud --project=${PROJECT_ID} compute ssh ${NAME} --zone=${ZONE}
+}
+

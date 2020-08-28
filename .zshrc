@@ -81,10 +81,13 @@ zle -N peco-select-history
 bindkey '^r' peco-select-history
 
 # docker関連のエイリアス
-alias dcup='docker-compose -f $(ls -l | grep \.yml | awk '\''{print $8}'\'' | peco) up -d'
-alias dcdown='docker-compose -f $(ls -l | grep \.yml | awk '\''{print $8}'\'' | peco) down'
+alias dcup='docker-compose -f $(ls -l | grep \.yml | awk '\''{print $9}'\'' | peco) up -d'
+alias dcdown='docker-compose -f $(ls -l | grep \.yml | awk '\''{print $9}'\'' | peco) down'
 alias dps='docker ps --format "{{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Command}}\t{{.RunningFor}}"'
 alias dexec='docker exec -it `dps | peco | cut -f 1` /bin/bash'
+
+# ghq関連のエイリアス
+alias ghq-cd='cd "$(ghq list --full-path | peco)"'
 
 # ec-cubeプラグイン圧縮 - ec-cube3系のルートディレクトリでこの関数を使う
 function plugin-pkg {
